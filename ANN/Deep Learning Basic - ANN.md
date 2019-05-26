@@ -95,31 +95,35 @@ Deep Learning에는 Deep Neural Networks, Convolutional Neural networks, Recurre
 
 ![img](http://solarisailab.com/wp-content/uploads/2017/05/perceptron_image.png)
 
- **퍼셉트론(Perceptron)**은 1957년 Frank Rosenblatt가 고안했으며, 인공 신경망을 이루는 인공 뉴런의 모델중 하나이다.  McCulloch, Warren S.와  Walter Pitts.가 제안한 인공 신경망의 개념을 수학적인 모델로써 나타낸것이다.
+ **퍼셉트론(Perceptron)**은 1957년 Frank Rosenblatt가 고안했으며, 인공 신경망을 이루는 인공 뉴런의 모델 중 하나이다.  McCulloch, Warren S.와  Walter Pitts.가 제안한 인공 신경망의 개념을 수학적인 모델로써 나타낸것이다.
 
 #### 2-3-2. Perceptron Architecture
 
 ##### 2-3-2-1. Neuron Architecture
 
-![ë´ë°ì ëí ì´ë¯¸ì§ ê²ìê²°ê³¼](http://study.zumst.com/upload/00-D22-91-12-05/1_2_a_%EB%89%B4%EB%9F%B0%EC%9D%98%20%EA%B5%AC%EC%A1%B0.jpg)
+![img](http://piramvill2.org/wp/wp-content/uploads/2018/04/%EC%9D%B8%EA%B3%B5%EC%8B%A0%EA%B2%BD%EB%A7%9D_%EB%89%B4%EB%9F%B0_%EC%8B%9C%EB%83%85%EC%8A%A4_%EB%89%B4%EB%9F%B0_%EC%9C%A0%EC%B6%94%EC%98%81%EC%96%B4-632x356.png)
 
-뉴런은 크게 가지 돌기와 신경세포체, 그리고 축삭돌기로 이루어져있다.
+인공 뉴런은 실제 뉴런에서의 몇 가지 특징을 가져온 것이다.
 
-가지 돌기(수상 돌기)는 다른 뉴련의 축삭돌기 말단과 연결되어 전기 신호를 받아들이는 역할을 한다.
+시냅스-전-뉴런의 축삭종말에서 전달되는 신호들의 강도를 입력($x_i $)으로 가져오고,
 
-축삭돌기는 가지 돌기에서 받아들인 신호를 전달하는 역할을 한다. 뉴런의 축삭돌기는 거의 항상 같은 진폭(전압 차이)을 가지고 있다.
+시냅수-전-뉴런의 축삭종말의 신경전달물질의 양을 가중치($w$)로 가져왔다.
 
-신경 세포체의 역할은 퍼셉트론과 관련 없으니 생략한다.
+시냅스 후의 값들은 신경 세포체에서 합산되는데, 이는 가중치와 입력값의 곱을 합해주는 과정이다.
+
+그리고 이 값이 활동 전위의 형태로 축삭을 통해 전달되는데, 이를 활성화 함수(a)와 활성값으로 하였다.
+
+이러한 다른 뉴런들의 신호들을 모두 모아 임계치($\theta $)보다 크면 자극을 주고(1), 작으면 자극 주지않는다(0).
 
 ##### 2-3-2-2. Basic Structure
 
 퍼셉트론(단층 퍼셉트론)은 출력층과 입력층으로만 이루어져있다.
 
-입력층은 뉴련의 가지돌기와 연결된 다른 뉴런들의 축삭돌기 말단을 모방한 것으로, 다른 뉴런들의 축삭돌기 말단에서 오는 신호들을 입력($x_i $)으로 표현한다.
+입력층은 뉴련의 가지돌기와 연결된 다른 뉴런들의 축삭돌기 말단을 모방한 것으로, 다른 뉴런들의 축삭돌기 말단에서 오는 신호들을 입력으로 표현한다.
 
-그리고 뉴런과 다른 뉴런들의 축삭돌기들 말단 사이의 연결 정도가 존재하는데, 이를 가중치($w$)로 표현한다.
+그리고 뉴런과 다른 뉴런들의 축삭돌기들 말단 사이의 연결 정도가 존재하는데, 이를 가중치로 표현한다.
 
-이러한 다1른 뉴런들의 신호들을 모두 모아 임계치($\theta $)보다 크면 자극을 주고(1), 작으면 자극 주지않는다(0).
+
 
 따라서, 뉴런을 본떠 i번째 입력노드의 입력값을 $x_i$, i번째 입력노드와 연결된 가중치를 $w_i$, 퍼셉트론의 출력을 $y$, 임계값을 $\theta$ 라고 정의하고, $y$를 다음과 같이 수식으로 나타낼 수 있다.
 $$
@@ -142,7 +146,7 @@ $$
 $y$에 대한 식의 우항을 정리하기 위하여 $b=-\theta$라고 정의하고, $y$는 다음과 같이 나타낼 수 있다.
 $$
 y=\begin{cases}  0, (x\cdot w +b \leq0)\\
-1 , (x\cdot w -b>0) \end{cases}
+1 , (x\cdot w +b>0) \end{cases}
 $$
 
 
@@ -231,63 +235,87 @@ tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}
 ReLU(x)=\max(0,x)
 $$
 
-#### 2-4-3. MLP Architecture
+#### 2-4-3. Learning Algorithm
 
 ##### 2-4-3-1. Cost functions / Loss functions
 
-인공신경망을 학습시키려면, 어떤 데이터에 대해 인공 신경망이 추론한 결과와 실제 정답을 비교하여, 실제 정답과 비슷하게 추론하게 해야한다. 여기서, **비용 함수(Cost function) 또는 손실 함수(Loss function)**를 정답과 추론 결과의 유사한 정도의 지표로 사용하면, 인공신경망의 학습이라는 것이cost function을 최소화 또는 최대화 하는 최적화 문제(Optimization problem)로 바뀐다.
-
-또한, 정확도는 손실함수로써 사용할 수 없는데, 이는 각 test set마다 손실 함수의 값이 달라지기 때문이다.
+인공신경망을 학습시키려면, 어떤 데이터에 대해 인공 신경망이 추론한 결과와 실제 정답을 비교하여, 실제 정답과 비슷하게 추론하게 해야한다. 여기서, **비용 함수(Cost function) 또는 손실 함수(Loss function)**를 정답과 추론 결과의 유사한 정도의 지표로 사용하면, 인공신경망의 학습이라는 것이 cost function을 최소화 또는 최대화 하는 최적화 문제(Optimization problem)로 바뀐다.
 
 비용 함수로 **평균 제곱 오차(Mean Square Error)**, **교차 엔트로피 오차(Cross Entropy Error) **가 주로 사용된다.
 
 $E$를 손실 함수의 값이라고 했을 때, 평균 제곱 오차의 값은 다음과 같다.
 $$
-E=\frac{1}{2}\sum_k(t_k-y_k)^2
+MSE(y,t)=\frac{1}{2}\sum_k(t_k-y_k)^2
 $$
 교차 엔트로피 오차의 값은 다음과 같다.
 $$
-E=-\sum_kt_k\log y_k
+CEE(y,t)=-\sum_kt_k\log y_k
 $$
 두 함수는 말 그대로 오차이기 때문에, 최소화 할수록 정확도가 올라가며 학습이 되게된다.
 
+정확도는 손실함수로써 사용할 수 없는데, 이는 각 test set마다 손실 함수의 값이 달라지기 때문이다.
+
 ##### 2-4-3-2. Gradient Descent 
+
+![gradient descentì ëí ì´ë¯¸ì§ ê²ìê²°ê³¼](https://t1.daumcdn.net/cfile/tistory/25343A4B534CD49A1F)
 
 **경사 하강법(Gradient Descent)**는 함수의 기울기를 이용하여 낮은 쪽으로 극값에 이를때까지 반복하는 최적화 알고리즘이다.
 
+$i$는 현재 스텝이고, $x_i$최적화 할 변수의 현재 스텝, $\eta$는 learning rate, $f$는 함
+$$
+x_{i+1} = x_i-\eta \nabla f(x_i) \\
+= x_i-\eta\frac{d f(x_i)}{d x_i}
+$$
 
 
 ##### 2-4-3-2. Delta  rule
 
-**델타 규칙**(delta rule)은 경사 하강법(Gradient Descent) 학습 방법으로, 싱글 레이어 퍼셉트론에서 인공 뉴런들의 연결강도를 갱신하는데 쓰인다. 
+**델타 규칙**(delta rule)은 경사 하강법(Gradient Descent) 학습 방법으로, 단층 퍼셉트론에서 인공 뉴런들의 연결강도를 갱신하는데 쓰인다. 
+
+| 변수            | 설명                                                     |
+| --------------- | -------------------------------------------------------- |
+| $t_k$           | 데이터 정답                                              |
+| $y_k$           | 신경망 출력값                                            |
+| $\Delta w_{ji}$ | j번 노드에서 i번 노드로 가는 가중치를 업데이트 할 변화량 |
+| $\eta$          | 학습 상수 : learning rate                                |
+| $g$             | 활성화 함수                                              |
+| $x_k$           | 입력값                                                   |
+| $h_j$           | $\sum_k x_k w_{jk}$                                      |
+
+
 $$
 E=\frac{1}{2}\sum_k(t_k-y_k)^2
 \\
-\Delta w_{ji}=\eta \frac{\partial E}{\partial w_{ij}}
+\Delta w_{ji}=\eta \frac{\partial E}{\partial w_{ji}}
 \\
-=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial w_{ij}}
+=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial w_{ji}}
 \\
-=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial y_j} \frac{\partial y_j}{\partial w_{ij}}
+=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial y_j} \frac{\partial y_j}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j) \frac{\partial y_j}{\partial w_{ij}}
+= - \eta(t_j-y_j) \frac{\partial y_j}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j) \frac{\partial y_j}{\partial h_j} \frac{\partial h_j}{\partial w_{ij}}
+= - \eta(t_j-y_j) \frac{\partial y_j}{\partial h_j} \frac{\partial h_j}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j)g'(h_j)\frac{\partial h_j}{\partial w_{ij}}
+= - \eta(t_j-y_j)a'(h_j)\frac{\partial h_j}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j)g'(h_j)\frac{\partial \sum_k x_k w_{jk}}{\partial w_{ij}}
+= - \eta(t_j-y_j)a'(h_j)\frac{\partial (\sum_k x_k w_{jk}+ b)}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j)g'(h_j)\frac{x_iw_{ij}}{\partial w_{ij}}
+= - \eta(t_j-y_j)a'(h_j)\frac{\partial x_iw_{ji}}{\partial w_{ji}}
 \\
-= - \eta(t_j-y_j)g'(h_j)x_i
+= - \eta(t_j-y_j)a'(h_j)x_i
 \\
-\therefore \Delta w_{ji}= - \eta(t_j-y_j)g'(h_j)x_i
-\\
-x_i=:x_i-
+\therefore \Delta w_{ji}= - \eta(t_j-y_j)a'(h_j)x_i
+$$
+
+위의 변화식을 이용하여 다음과 같이 가중치$w_{ij}$를 업데이트 할 수 있다.
+$$
+w_{ji}\leftarrow w_{ji}-\Delta w_{ji}
 $$
 
 
-##### 2-4-3-3. Learning Algorithm : Back Propagation
+##### 2-4-3-3. Back Propagation
+
+l
 
 ## 3. Deep Neural Network
 
