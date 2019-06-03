@@ -1,40 +1,5 @@
 # Deep Learning Basics
 
-## Contents
-
-1. Machine Learning
-   1. Concept of Machine Learning
-   2. Types of learning algorithms
-      1. Supervised Learning
-      2. Unsupervised Learning
-      3. Reinforcement Learning
-2. Deep Learning and Artificial Neural Network
-   1. Deep Learning
-   2. Artificial Neural Network
-   3. Single Layer Perceptron
-      1. What is Perceptron?
-      2. How does the neuron work?
-      3. Perceptron Architecture
-         1. Basic Structure
-         2. Activation functions
-         3. Cost functions / Loss functions
-         4. Learning Algorithms
-      4. XOR Problem
-   4. Multi Layer Perceptron
-      1. What is MLP?
-      2. MLP Architecture
-         1. Basic Structure
-         2. Learning Algorithm : Back Propagation
-3. Deep Neural Network
-   1. Deep Neural Network
-   2. Convolution Neural Networks
-   3. Recurrent Neural Networks
-   4. Long Short-Term Memory models
-
------
-
-
-
 ## 1. Machine Learning
 
 ### 1-1. Concept of Machine Learning
@@ -65,7 +30,7 @@ Clustering 등의 알고리즘이 비 지도 학습에 속하며, 주로 Auto En
 
 #### 1-2-3. Reinforcement Learning
 
-**강화 학습**이란, 행동 심리학에서 영향을 받았으며, 현재 상태에서 할 수 있는 행동들이 주어지고, 각 상황에 따른 보상이 주어지는 환경에서 에이전트가 정의되어있을 때, 에이전트가 해당 환경에서 보상을 최대화 하거나, 보상을 최대화 하는 행동 순서를 선택하는 방법이다.
+**강화 학습**이란, 행동 심리학에서 영향을 받았으며, 현재 상태에서 할 수 있는 행동들이 주어지고, 각 상황에 따른 보상이 주어지는 환경에서 에이전트가 정의되어있을 때, 에이전트가 해당 환경에서 보상을 최대화 하는 행동 순서를 선택하는 방법이다.
 
 강화학습 모델로 DQN을 많이 사용한다.
 
@@ -111,21 +76,15 @@ Deep Learning에는 Deep Neural Networks, Convolutional Neural networks, Recurre
 
 시냅스 후의 값들은 신경 세포체에서 합산되는데, 이는 가중치와 입력값의 곱을 합해주는 과정이다.
 
-그리고 이 값이 활동 전위의 형태로 축삭을 통해 전달되는데, 이를 활성화 함수(a)와 활성값으로 하였다.
+그리고 이 값이 활동 전위의 형태로 축삭을 통해 전달되는데, 활성값으로 하였다.
 
-이러한 다른 뉴런들의 신호들을 모두 모아 임계치($\theta $)보다 크면 자극을 주고(1), 작으면 자극 주지않는다(0).
+이러한 다른 뉴런들의 신호들을 모두 모아 임계치($\theta $)보다 크면 자극을 주고(1), 작으면 자극 주지않는다(0). (이는 활성화 함수 a이다.)
 
 ##### 2-3-2-2. Basic Structure
 
 퍼셉트론(단층 퍼셉트론)은 출력층과 입력층으로만 이루어져있다.
 
-입력층은 뉴련의 가지돌기와 연결된 다른 뉴런들의 축삭돌기 말단을 모방한 것으로, 다른 뉴런들의 축삭돌기 말단에서 오는 신호들을 입력으로 표현한다.
-
-그리고 뉴런과 다른 뉴런들의 축삭돌기들 말단 사이의 연결 정도가 존재하는데, 이를 가중치로 표현한다.
-
-
-
-따라서, 뉴런을 본떠 i번째 입력노드의 입력값을 $x_i$, i번째 입력노드와 연결된 가중치를 $w_i$, 퍼셉트론의 출력을 $y$, 임계값을 $\theta$ 라고 정의하고, $y$를 다음과 같이 수식으로 나타낼 수 있다.
+단층 퍼셉트론은, 아래와 같은 수식으로 나타낼 수 있다. 
 $$
 w = (w_1, w_2,..,w_N)
 \\
@@ -286,21 +245,21 @@ $$
 $$
 E=\frac{1}{2}\sum_k(t_k-y_k)^2
 \\
-\Delta w_{ji}=\eta \frac{\partial E}{\partial w_{ji}}
+\Delta w_{ji}=\eta \frac{\partial E}{\partial w_{ij}}
 \\
-=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial w_{ji}}
+=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial w_{ij}}
 \\
-=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial y_j} \frac{\partial y_j}{\partial w_{ji}}
+=\eta \frac{\partial (\frac{1}{2}(t_j-y_j)^2)}{\partial y_j} \frac{\partial y_j}{\partial w_{ij}}
 \\
-= - \eta(t_j-y_j) \frac{\partial y_j}{\partial w_{ji}}
+= - \eta(t_j-y_j) \frac{\partial y_j}{\partial w_{ij}}
 \\
-= - \eta(t_j-y_j) \frac{\partial y_j}{\partial h_j} \frac{\partial h_j}{\partial w_{ji}}
+= - \eta(t_j-y_j) \frac{\partial y_j}{\partial h_j} \frac{\partial h_j}{\partial w_{ij}}
 \\
-= - \eta(t_j-y_j)a'(h_j)\frac{\partial h_j}{\partial w_{ji}}
+= - \eta(t_j-y_j)a'(h_j)\frac{\partial h_j}{\partial w_{ij}}
 \\
-= - \eta(t_j-y_j)a'(h_j)\frac{\partial (\sum_k x_k w_{jk}+ b)}{\partial w_{ji}}
+= - \eta(t_j-y_j)a'(h_j)\frac{\partial (\sum_k x_k w_{jk}+ b)}{\partial w_{ij}}
 \\
-= - \eta(t_j-y_j)a'(h_j)\frac{\partial x_iw_{ji}}{\partial w_{ji}}
+= - \eta(t_j-y_j)a'(h_j)\frac{x_iw_{ij}}{\partial w_{ij}}
 \\
 = - \eta(t_j-y_j)a'(h_j)x_i
 \\
@@ -309,20 +268,8 @@ $$
 
 위의 변화식을 이용하여 다음과 같이 가중치$w_{ij}$를 업데이트 할 수 있다.
 $$
-w_{ji}\leftarrow w_{ji}-\Delta w_{ji}
+w_{ij}\leftarrow w_{ij}-\Delta w_{ji}
 $$
-
 
 ##### 2-4-3-3. Back Propagation
 
-l
-
-## 3. Deep Neural Network
-
-### 3-1. Deep Neural Network
-
-### Convolution Neural Networks
-
-### Recurrent Neural Networks
-
-### Long Short-Term Memory models
